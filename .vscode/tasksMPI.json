@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Lab1 MPI",
+            "type": "shell",
+            "command": "\"C:\\Program Files (x86)\\Microsoft SDKs\\MPI\\Bin\\mpicxx.exe\"",
+            "args": [
+                "${workspaceFolder}/src/Lab1/matrix_mpi.cpp",
+                "-o",
+                "${workspaceFolder}/bin/matrix_mpi.exe",
+                "-lmpi",
+                "-O2"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}

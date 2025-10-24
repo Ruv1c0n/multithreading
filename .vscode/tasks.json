@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Lab1 OMP",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-I", "D:/multithreading/include/Lab1",
+                "D:/multithreading/src/Lab1/matrix_omp.cpp",
+                "-o", "D:/multithreading/bin/matrix_omp.exe",
+                "-fopenmp",
+                "-O2"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Build Matrix MPI",
+            "type": "shell",
+            "command": "build_mpi.bat",
+            "group": "build",
+            "problemMatcher": ["$msCompile"]
+        }
+    ]
+}
