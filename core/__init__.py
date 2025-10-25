@@ -1,10 +1,11 @@
-# core/__init__.py
-"""
-Пакет core — ядро приложения.
-Содержит:
-- compiler.py — сборка программ
-- experiment.py — запуск и анализ экспериментов
-- logger.py — централизованный логгер
+"""core package
+
+Minimal package exposing compiler, experiment runner and a tiny UI logger.
+
+Exports:
+- Compiler
+- ExperimentRunner
+- UILogger
 """
 
 from .compiler import Compiler

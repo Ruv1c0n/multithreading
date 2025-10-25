@@ -1,10 +1,38 @@
+"""core.experiment
+====================
+
+Runner for executing OMP/MPI experiment binaries and plotting simple
+speedup/efficiency charts. The runner tries to be forgiving: it logs stderr,
+handles timeouts and uses ``None`` for runs that failed or timed out.
+
+Quick example
+-------------
+from core.experiment import ExperimentRunner
+log = UILogger()
+proj = "."
+runner = ExperimentRunner(log, proj)
+threads, times = runner.run("bin/matrix_omp.exe", method="OMP", max_threads=8)
+runner.plot_results("OMP", "Lab1", threads, times)
+
+Notes
+-----
+- The binary is expected to print a line containing ``Time: <number>``. The
+  parser extracts the first occurrence and converts it to float.
+- Per-run timeouts are 60 seconds. Increase if your experiments are longer.
+"""
+
 import os
 import subprocess
 import matplotlib.pyplot as plt
 
 
 class ExperimentRunner:
-    """Запускает OMP/MPI эксперименты и строит графики."""
+    """Run OMP/MPI experiments and build plots.
+
+    Parameters
+    - logger: object with `.info`, `.warn`, `.error`, `.success` methods
+    - project_dir: base path used for saving result graphics
+    """
 
     def __init__(self, logger, project_dir):
         self.log = logger
