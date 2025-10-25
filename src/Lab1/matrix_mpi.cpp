@@ -1,9 +1,5 @@
-#include <mpi.h>
-#include <iostream>
-#include <vector>
-#include <chrono>
+#include "matrix_mpi.h"
 
-const int N = 1000; // Размер матриц (можно изменить)
 
 void generateMatrixA(std::vector<double> &A, int rows, int cols)
 {
