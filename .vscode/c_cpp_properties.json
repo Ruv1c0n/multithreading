@@ -6,7 +6,8 @@
                 "${workspaceFolder}/include/Lab1/**",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:/Program Files (x86)/Microsoft SDKs/MPI/Include/**"
             ],
             "compilerPath": "C:/MinGW/bin/g++.exe",
             "cStandard": "gnu17",

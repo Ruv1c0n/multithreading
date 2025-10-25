@@ -84,25 +84,29 @@ class LabTab:
         self.current_exe = self.OMP_EXE if method == "OMP" else self.MPI_EXE
 
     def compile_program(self, src_file, exe_file, method):
-        """Компиляция точно как в старом рабочем варианте"""
         try:
             if method == "OMP":
-                cmd = ["g++", "-fopenmp", "-O2", src_file,
-                       "-I", self.lab_info["INCLUDE_DIR"],
-                       "-o", exe_file]
+                cmd = ["g++", "-std=c++17", "-fopenmp", "-O2", src_file,
+                    "-I", self.lab_info["INCLUDE_DIR"], "-o", exe_file]
             else:
-                # ФИКС: Добавляем пути MPI как в рабочей ручной команде
-                mpi_include = r"C:\Program Files (x86)\Microsoft SDKs\MPI\Include"
-                mpi_lib = r"C:\Program Files (x86)\Microsoft SDKs\MPI\Lib\x64"
+                mpi_include = r"C:\Program Files (x86)\Microsoft SDKs\MPI\Include" 
+                mpi_lib = r"C:\Program Files (x86)\Microsoft SDKs\MPI\Lib\x64" 
                 cmd = [
-                    "g++", "-fopenmp", "-O2",
-                    "-I", self.lab_info["INCLUDE_DIR"],
-                    "-I", mpi_include,
-                    "-L", mpi_lib,
-                    src_file,
-                    "-o", exe_file,
+                    "g++", 
+                    "-fopenmp", 
+                    "-O2", 
+                    "-I", 
+                    self.lab_info["INCLUDE_DIR"], 
+                    "-I",
+                    mpi_include, 
+                    "-L",
+                    mpi_lib, 
+                    src_file, 
+                    "-o", 
+                    exe_file, 
                     "-lmsmpi"
                 ]
+
 
             # ВРЕМЕННО: Вывод для отладки
             print(f"DEBUG: Команда компиляции для {method}:")
@@ -123,8 +127,8 @@ class LabTab:
 
     def rebuild_all(self):
         self.log("🔄 Пересборка проекта...")
-        method = self.method_var.get()
-        exe = self.OMP_EXE if method == "OMP" else self.MPI_EXE
+        method = self.method_var.get().lower()
+        exe = self.OMP_EXE if method == "omp" else self.MPI_EXE
         src_dir = self.lab_info["SRC_DIR"]
 
         cpp_files = [f for f in os.listdir(src_dir) if f.endswith(".cpp")]
@@ -132,10 +136,20 @@ class LabTab:
             self.log(f"❌ Нет исходников в {src_dir}")
             return
 
+        target_file = None
         for cpp_file in cpp_files:
-            src_file = os.path.join(src_dir, cpp_file)
-            self.compile_program(src_file, exe, method)
-        self.log(f"✅ {os.path.basename(exe)} пересобран.\n")
+            name_lower = cpp_file.lower()
+            if name_lower.endswith(f"_{method}.cpp"):
+                target_file = os.path.join(src_dir, cpp_file)
+                break
+
+        if not target_file:
+            self.log(f"❌ Не найден файл '{method}'.")
+            return
+
+        self.compile_program(target_file, exe, method)
+        self.log(
+            f"✅ {os.path.basename(exe)} пересобран из {os.path.basename(target_file)}.\n")
 
     def run_experiment(self):
         if self.current_process and self.current_process.poll() is None:
