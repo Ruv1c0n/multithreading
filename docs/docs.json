@@ -55,47 +55,13 @@
             "pages": ["changelog"]
           }
         ]
-      },
-      {
-        "language": "es",
-        "dropdowns": [
-          {
-            "dropdown": "Documentación",
-            "icon": "book",
-            "description": "Cómo usar el producto de Example Co.",
-            "pages": [
-              {
-                "group": "Comenzando",
-                "pages": ["es/index", "es/quickstart"]
-              },
-              {
-                "group": "Personalización",
-                "pages": ["es/settings", "es/users", "es/features"]
-              },
-              {
-                "group": "Billing",
-                "pages": [
-                  "es/billing/overview",
-                  "es/billing/payments",
-                  "es/billing/subscriptions"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Changelog",
-            "icon": "history",
-            "description": "Actualizaciones y cambios",
-            "pages": ["es/changelog"]
-          }
-        ]
       }
     ]
   },
   "logo": {
     "light": "/logo-light.svg",
     "dark": "/logo-dark.svg",
-    "href": "https://example.com"
+    "href": "https://yarsu.ru/images/edusite_default_logo.svg"
   },
   "navbar": {
     "links": [
