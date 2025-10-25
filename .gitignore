@@ -5,3 +5,4 @@ bin/*
 !results/output
 results/graphics/*
 results/output/*
+__pycache__
