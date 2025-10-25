@@ -97,6 +97,16 @@ int main(int argc, char **argv)
     if (rank == 0)
     {
         std::cout << "Time: " << diff.count() << std::endl;
+        // Сохранение результата, аналогично matrix_omp.cpp
+        std::filesystem::create_directories("results/output/");
+        std::ofstream fout("results/output/MPI.txt");
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = 0; j < N; ++j)
+                fout << C[i * N + j] << " ";
+            fout << "\n";
+        }
+        fout.close();
     }
 
     MPI_Finalize();
