@@ -103,5 +103,7 @@
     "iomanip": "cpp"
   },
   "C_Cpp.default.compilerPath": "C:/MinGW/bin/g++.exe",
-  "C_Cpp.errorSquiggles": "enabled"
+  "C_Cpp.errorSquiggles": "enabled",
+  "docwriter.style": "Auto-detect",
+  "docwriter.language": "English"
 }

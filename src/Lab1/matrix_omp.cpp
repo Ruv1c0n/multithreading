@@ -1,3 +1,7 @@
+/**
+ * The code performs matrix multiplication using OpenMP for parallelization and saves the result to a
+ * file.
+ */
 #include "matrix_omp.h"
 
 
@@ -30,6 +34,14 @@ void multiplyMatricesOMP(const std::vector<std::vector<double>> &A,
         }
 }
 
+/**
+ * The main function in C++ that multiplies two matrices using OpenMP, measures the execution time,
+ * saves the result to a file, and outputs the time taken.
+ * 
+ * @return The `main` function in the provided code snippet returns an integer value of 0. This is a
+ * common convention in C++ programs where a return value of 0 typically indicates successful
+ * execution of the program.
+ */
 int main()
 {
     std::vector<std::vector<double>> A(N, std::vector<double>(N));
