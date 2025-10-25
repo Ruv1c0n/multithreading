@@ -1,0 +1,7 @@
+.gitignore
+bin/*
+!bin
+!results/graphics
+!results/output
+results/graphics/*
+results/output/*
