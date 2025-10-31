@@ -50,33 +50,79 @@ class LabTab:
         self.compiler = Compiler(self.lab_info["INCLUDE_DIR"], self.logger)
         self.runner = ExperimentRunner(self.logger, project_dir)
 
+        if self.lab_name == "Integrate":
+            self.submethod_var = tk.StringVar(value="rect")
+            self.integral_var = tk.StringVar(value="a")
+
         self._build_ui()
 
-    def _build_ui(self):
-        """
-        The `_build_ui` function creates a user interface with labels, radio buttons, buttons for
-        rebuilding projects and starting experiments, and a table using the `ttk` module in Python.
-        """
-        tk.Label(self.frame, text=f"{self.lab_name}: выбор метода").pack(
-            pady=5)
-        for method in ["OMP", "MPI"]:
-            tk.Radiobutton(self.frame, text=method,
-                           variable=self.method_var, value=method).pack()
 
-        btns = tk.Frame(self.frame)
-        btns.pack(pady=10)
-        ttk.Button(btns, text="Пересобрать", command=self.rebuild_project).grid(
+    def _build_ui(self):
+        # --- Верхнее текстовое поле (лог) ---
+        self.output.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
+
+        # --- Выбор метода OMP/MPI ---
+        method_frame = ttk.LabelFrame(self.frame, text="Выбор метода (OMP/MPI)")
+        method_frame.grid(row=1, column=0, columnspan=2,
+                        sticky="w", padx=10, pady=5)
+        for i, method in enumerate(["OMP", "MPI"]):
+            tk.Radiobutton(method_frame,
+                        text=method,
+                        variable=self.method_var,
+                        value=method
+                        ).grid(row=0, column=i, padx=5, pady=2)
+
+        # --- Для лабораторной работы Integrate ---
+        if self.lab_name == "Integrate":
+            # Выбор метода интегрирования
+            submethod_frame = ttk.LabelFrame(
+                self.frame, text="Метод интегрирования")
+            submethod_frame.grid(row=2, column=0, sticky="nw", padx=10, pady=5)
+            for i, submethod in enumerate(["rect", "trap", "simp"]):
+                tk.Radiobutton(submethod_frame,
+                            text=submethod,
+                            variable=self.submethod_var,  # отдельная переменная для интегрирования
+                            value=submethod
+                            ).grid(row=i, column=0, sticky="w", pady=2)
+
+            # Выбор интеграла
+            integral_frame = ttk.LabelFrame(self.frame, text="Выбор интеграла")
+            integral_frame.grid(row=2, column=1, sticky="nw", padx=10, pady=5)
+            integrals = [
+                "a)[ 13/2   ,  3     ]   1.0 / sqrt(3 + 3 * pow(x, 2))",
+                "b)[ 2*PI/7 , -2*PI/7]   exp(x) * sin(exp(x))",
+                "c)[-1      , -7     ]   1.0 / pow(sqrt(pow(x, 2)-1), 2)",
+                "d)[ 2*PI   , -2*PI  ]   x * atan(x) / sqrt(1 + pow(x, 2))"
+            ]
+            for i, integral in enumerate(integrals):
+                tk.Radiobutton(integral_frame,
+                            text=integral,
+                            variable=self.integral_var,
+                            value=integral,
+                            anchor="w",
+                            justify="left",
+                            wraplength=300
+                            ).grid(row=i, column=0, sticky="w", pady=2)
+
+        # --- Кнопки управления ---
+        btn_frame = ttk.Frame(self.frame)
+        btn_frame.grid(row=3, column=0, columnspan=2, pady=10)
+        ttk.Button(btn_frame, text="Пересобрать", command=self.rebuild_project).grid(
             row=0, column=0, padx=10)
-        ttk.Button(btns, text="Запустить эксперимент(1-28)",
-                   command=self.start_experiment).grid(row=0, column=1, padx=10)
-        
-        # --- Таблица ---
+        ttk.Button(btn_frame, text="Запустить эксперимент(1-28)",
+                command=self.start_experiment).grid(row=0, column=1, padx=10)
+
+        # --- Таблица результатов ---
         self.tree = ttk.Treeview(self.frame, columns=(
             "Threads", "Time", "Speedup", "Efficiency"), show="headings", height=10)
         for col, width in zip(("Threads", "Time", "Speedup", "Efficiency"), (100, 150, 150, 150)):
             self.tree.heading(col, text=col)
             self.tree.column(col, width=width, anchor="center")
-        self.tree.pack(pady=10)
+        self.tree.grid(row=4, column=0, columnspan=2, pady=10, sticky="nsew")
+
+        # чтобы таблица растягивалась при изменении размера окна
+        self.frame.grid_rowconfigure(4, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1)
 
     def rebuild_project(self):
         """
@@ -132,8 +178,21 @@ class LabTab:
         """
         method = self.method_var.get()
         exe = self.lab_info[f"{method}_EXE"]
+        if self.lab_name == "Integrate":
+            submethod = self.submethod_var.get()
+            integral_mapping = {
+                "a)[ 13/2   ,  3     ]   1.0 / sqrt(3 + 3 * pow(x, 2))": 1,
+                "b)[ 2*PI/7 , -2*PI/7]   exp(x) * sin(exp(x))": 2,
+                "c)[-1      , -7     ]   1.0 / pow(sqrt(pow(x, 2)-1), 2)": 3,
+                "d)[ 2*PI   , -2*PI  ]   x * atan(x) / sqrt(1 + pow(x, 2))": 4
+            }
+            integral_id = integral_mapping.get(self.integral_var.get(), 1)
 
-        threads, times = self.runner.run(exe, method)
+            # Запуск через ExperimentRunner.run с аргументами
+            threads, times = self.runner.run(exe, method, submethod, integral_id)
+        else:
+            threads, times = self.runner.run(exe, method)
+
         self._update_table(threads, times)
         self.runner.plot_results(method, self.lab_name, threads, times)
         self._show_graph_window(method, threads, times)

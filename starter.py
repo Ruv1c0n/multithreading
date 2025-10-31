@@ -15,17 +15,17 @@ INCLUDE_DIR = f"{PROJECT_DIR}\\include"
 # laboratory works. Each key in the dictionary represents a specific lab (e.g., Lab1, Lab2, Lab3),
 # and the corresponding value is another dictionary containing details about that lab.
 LABS = {
-    "Lab1": {
+    "Matrix": {
         "OMP_EXE": f"{BIN_DIR}\\matrix_omp.exe",
         "MPI_EXE": f"{BIN_DIR}\\matrix_mpi.exe",
-        "SRC_DIR": f"{PROJECT_DIR}\\src\\Lab1",
-        "INCLUDE_DIR": f"{INCLUDE_DIR}\\Lab1"
+        "SRC_DIR": f"{PROJECT_DIR}\\src\\Matrix",
+        "INCLUDE_DIR": f"{INCLUDE_DIR}\\Matrix"
     },
-    "Lab2": {
-        "OMP_EXE": f"{BIN_DIR}\\lab2_omp.exe",
-        "MPI_EXE": f"{BIN_DIR}\\lab2_mpi.exe",
-        "SRC_DIR": f"{PROJECT_DIR}\\src\\Lab2",
-        "INCLUDE_DIR": f"{INCLUDE_DIR}\\Lab2"
+    "Integrate": {
+        "OMP_EXE": f"{BIN_DIR}\\integrate_omp.exe",
+        "MPI_EXE": f"{BIN_DIR}\\integrate_mpi.exe",
+        "SRC_DIR": f"{PROJECT_DIR}\\src\\Integrate",
+        "INCLUDE_DIR": f"{INCLUDE_DIR}\\Integrate"
     },
     "Lab3": {
         "OMP_EXE": f"{BIN_DIR}\\lab3_omp.exe",

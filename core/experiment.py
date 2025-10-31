@@ -38,10 +38,27 @@ class ExperimentRunner:
         self.log = logger
         self.project_dir = project_dir
 
-    def run(self, exe_path, method, max_threads=28):
+    def run(self, exe_path, method, submethod=None, integral_id=None, max_threads=28):
+        """
+        Универсальный запуск эксперимента.
+        :param exe: путь к бинарнику
+        :param method: 'OMP' или 'MPI'
+        :param submethod: для Lab2 — 'rect', 'trap', 'simp'
+        :param integral_id: для Lab2 — номер интеграла 1..4
+        :return: threads, times
+        """
         if not os.path.exists(exe_path):
             self.log.error(f"Исполняемый файл не найден: {exe_path}")
             return []
+
+        args = [exe_path]
+
+        if submethod != None:
+            if submethod is None:
+                submethod = "rect"
+            if integral_id is None:
+                integral_id = 1
+            args += [submethod, str(integral_id), str(1000000)]
 
         threads = range(1, max_threads + 1)
         times = []
@@ -53,10 +70,10 @@ class ExperimentRunner:
                     env = os.environ.copy()
                     env["OMP_NUM_THREADS"] = str(t)
                     proc = subprocess.run(
-                        [exe_path], capture_output=True, text=True, env=env, timeout=60)
+                        args, capture_output=True, text=True, env=env, timeout=60)
                 else:
                     proc = subprocess.run(
-                        ["mpiexec", "-n", str(t), exe_path], capture_output=True, text=True, timeout=60)
+                        ["mpiexec", "-n", str(t), args], capture_output=True, text=True, timeout=60)
 
                 if proc.stderr:
                     self.log.warn(proc.stderr.strip() + proc.stderr +
