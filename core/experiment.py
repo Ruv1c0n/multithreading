@@ -59,14 +59,15 @@ class ExperimentRunner:
                         ["mpiexec", "-n", str(t), exe_path], capture_output=True, text=True, timeout=60)
 
                 if proc.stderr:
-                    self.log.warn(proc.stderr.strip())
+                    self.log.warn(proc.stderr.strip() + proc.stderr +
+                                  proc.stdout + str(proc.args) + str(proc.returncode) + str(proc))
 
                 t_val = self._parse_time(proc.stdout)
                 if t_val:
                     times.append(t_val)
                     self.log.info(f"Время: {t_val:.4f} сек")
                 else:
-                    self.log.warn("⚠ Не удалось извлечь время из вывода.")
+                    self.log.warn("⚠ Не удалось извлечь время из вывода." + proc.stderr + proc.stdout + str(proc.args) + str(proc.returncode) + str(proc))
                     times.append(None)
 
             except subprocess.TimeoutExpired:
