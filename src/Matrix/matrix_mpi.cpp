@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 
         // Save result
         std::filesystem::create_directories("results/output/");
-        std::ofstream fout("results/output/MPI.txt");
+        std::ofstream fout("results/output/matrix_mpi.txt");
         for (int i = 0; i < N; ++i)
         {
             for (int j = 0; j < N; ++j)

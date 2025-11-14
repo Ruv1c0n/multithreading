@@ -60,7 +60,7 @@ int main()
 
     // Сохранение результата
     std::filesystem::create_directories("results/output/");
-    std::ofstream fout("results/output/OMP.txt");
+    std::ofstream fout("results/output/matrix_omp.txt");
     for (const auto &row : C)
     {
         for (auto val : row)

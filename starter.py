@@ -27,11 +27,11 @@ LABS = {
         "SRC_DIR": f"{PROJECT_DIR}\\src\\Integrate",
         "INCLUDE_DIR": f"{INCLUDE_DIR}\\Integrate"
     },
-    "Lab3": {
-        "OMP_EXE": f"{BIN_DIR}\\lab3_omp.exe",
-        "MPI_EXE": f"{BIN_DIR}\\lab3_mpi.exe",
-        "SRC_DIR": f"{PROJECT_DIR}\\src\\Lab3",
-        "INCLUDE_DIR": f"{INCLUDE_DIR}\\Lab3"
+    "Differentiation": {
+        "OMP_EXE": f"{BIN_DIR}\\differentiation_omp.exe",
+        "MPI_EXE": f"{BIN_DIR}\\differentiation_mpi.exe",
+        "SRC_DIR": f"{PROJECT_DIR}\\src\\Differentiation",
+        "INCLUDE_DIR": f"{INCLUDE_DIR}\\Differentiation"
     }
 }
 
