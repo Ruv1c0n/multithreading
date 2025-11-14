@@ -73,7 +73,7 @@ class ExperimentRunner:
                         args, capture_output=True, text=True, env=env, timeout=60)
                 else:
                     proc = subprocess.run(
-                        ["mpiexec", "-n", str(t), args], capture_output=True, text=True, timeout=60)
+                        ["mpiexec", "-n", str(t)] + args, capture_output=True, text=True, timeout=60)
 
                 if proc.stderr:
                     self.log.warn(proc.stderr.strip() + proc.stderr +
