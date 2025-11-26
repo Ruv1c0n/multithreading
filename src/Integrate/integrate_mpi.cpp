@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
         fout.close();
 
         std::cout.precision(12);
-        std::cout << "Time: " << MPI_Wtime() - t0 << std::endl;
+        std::cout <<  MPI_Wtime() - t0 << std::endl;
     }
 
     MPI_Finalize();

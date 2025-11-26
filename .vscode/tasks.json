@@ -6,24 +6,54 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-I", "D:/multithreading/include/Lab1",
+                "-I",
+                "D:/multithreading/include/Lab1",
                 "D:/multithreading/src/Lab1/matrix_omp.cpp",
-                "-o", "D:/multithreading/bin/matrix_omp.exe",
+                "-o",
+                "D:/multithreading/bin/matrix_omp.exe",
                 "-fopenmp",
                 "-O2"
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
-            "problemMatcher": ["$gcc"]
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "Build Matrix MPI",
             "type": "shell",
             "command": "build_mpi.bat",
             "group": "build",
-            "problemMatcher": ["$msCompile"]
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe сборка активного файла",
+            "command": "C:/MinGW/bin/g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                ""
+            ],
+            "options": {
+                "cwd": "C:/MinGW/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Задача создана отладчиком."
         }
     ]
 }
