@@ -88,6 +88,3 @@ python starter.py
 
 ```
 
----
-
-## 🧠 Обновлённый `gui/lab_tab.py`
