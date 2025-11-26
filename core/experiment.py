@@ -52,8 +52,9 @@ class ExperimentRunner:
             return []
 
         args = [exe_path]
-
-        if submethod != None:
+        if "differentiation" in exe_path:
+            args += ["1000", "1.0"]  # M=1000, T=1.0
+        elif submethod != None:
             if submethod is None:
                 submethod = "rect"
             if integral_id is None:
@@ -73,11 +74,11 @@ class ExperimentRunner:
                         args, capture_output=True, text=True, env=env, timeout=60)
                 else:
                     proc = subprocess.run(
-                        ["mpiexec", "-n", str(t)] + args, capture_output=True, text=True, timeout=60)
+                        ["mpiexec", "-n", str(t)] + args, capture_output=True, text=True, timeout=10)
 
-                if proc.stderr:
-                    self.log.warn(proc.stderr.strip() + proc.stderr +
-                                  proc.stdout + str(proc.args) + str(proc.returncode) + str(proc))
+                # if proc.stderr:
+                #     self.log.warn(proc.stderr.strip() + proc.stderr +
+                #                   proc.stdout + str(proc.args) + str(proc.returncode) + str(proc))
 
                 t_val = self._parse_time(proc.stdout)
                 if t_val:

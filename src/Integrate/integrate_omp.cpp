@@ -19,7 +19,7 @@ double integrate_omp(int id, double a, double b, int n, int method)
     //     return numeric_limits<double>::infinity();
     // }
     if (method == 3){
-        n = 10;
+        n = 1000;
         if(n % 2 != 0) n++;
     }
     double h = (a - b) / n;

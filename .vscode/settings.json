@@ -100,7 +100,8 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "typeinfo": "cpp",
-    "iomanip": "cpp"
+    "iomanip": "cpp",
+    "cstring": "cpp"
   },
   "C_Cpp.default.compilerPath": "C:/MinGW/bin/g++.exe",
   "C_Cpp.errorSquiggles": "enabled",

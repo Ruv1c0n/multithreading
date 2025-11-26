@@ -1,13 +1,15 @@
+#define _USE_MATH_DEFINES
 #include <mpi.h>
 #include <iostream>
 #include <fstream>
 #include <cmath>
 #include <vector>
 #include <sstream>
+#include <filesystem>
 
 double f(double x, double t)
 {
-    return x * sin(M_PI * t);
+    return -x * x + x + 2.0 * t;
 }
 
 int main(int argc, char *argv[])
@@ -48,6 +50,7 @@ int main(int argc, char *argv[])
     for (int i = 0; i <= local_M + 1; i++)
         u[i] = 0.0;
 
+    double t0 = MPI_Wtime();
     // основной временной цикл
     for (int n = 0; n < N; n++)
     {
@@ -106,11 +109,16 @@ int main(int argc, char *argv[])
 
     if (rank == 0)
     {
-        std::ofstream fout("output.txt");
+        std::filesystem::create_directories("results/output/");
+        std::ofstream fout("results/output/differentiation_mpi.txt");
+        fout.precision(12);
         for (int i = 0; i < M; i++)
             fout << i * h << " " << full_result[i] << "\n";
         fout.close();
-        std::cout << "Results saved to output.txt\n";
+
+        std::cout.precision(12);
+        double execution_time = MPI_Wtime() - t0;
+        std::cout << "Time: " << execution_time << std::endl;
     }
 
     MPI_Finalize();

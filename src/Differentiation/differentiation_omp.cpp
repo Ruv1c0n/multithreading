@@ -79,7 +79,7 @@ int main()
     double end = omp_get_wtime();
 
     std::cout << std::setprecision(12);
-    std::cout << (end - start) << std::endl;
+    std::cout << "Time: " << (end - start) << std::endl;
 
     std::filesystem::create_directories("results/output/");
     std::ofstream fout("results/output/differentiation_omp.txt");
@@ -88,6 +88,5 @@ int main()
     double h = 1.0 / M;
     for (int i = 0; i <= M; ++i)
         fout << i*h << " " << u[i] << "\n";
-
     return 0;
 }
